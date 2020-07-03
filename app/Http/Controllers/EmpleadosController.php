@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Empleados;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EmpleadosController extends Controller
 {
@@ -14,12 +15,11 @@ class EmpleadosController extends Controller
      */
     public function index()
     {
-        
-        $data['empleados']=Empleados::paginate(5);
+
+        $data['empleados'] = Empleados::paginate(5);
 
 
         return view('empleados.index', $data);
-
     }
 
     /**
@@ -40,17 +40,15 @@ class EmpleadosController extends Controller
      */
     public function store(Request $request)
     {
-        //$dataEmpleado=request()->all();
-        $dataEmpleado=request()->except('_token');
+        $dataEmpleado = request()->except('_token');
 
-        if($request->hasFile('photo')){
+        if ($request->hasFile('photo')) {
             $dataEmpleado['photo'] = $request->file('photo')->store('uploads', 'public');
         }
 
-        
         Empleados::insert($dataEmpleado);
 
-        return response()->json($dataEmpleado);
+        return redirect('empleados');
     }
 
     /**
@@ -70,10 +68,11 @@ class EmpleadosController extends Controller
      * @param  \App\Empleados  $empleados
      * @return \Illuminate\Http\Response
      */
-    public function edit(Empleados $empleados)
+    public function edit($id)
     {
-        return view('empleados.edit');
-        
+
+        $empleado = Empleados::findOrFail($id);
+        return view('empleados.edit', compact('empleado'));
     }
 
     /**
@@ -83,9 +82,24 @@ class EmpleadosController extends Controller
      * @param  \App\Empleados  $empleados
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Empleados $empleados)
+    public function update(Request $request, $id)
     {
         //
+        $dataEmpleado = request()->except(['_token', '_method']);
+
+        if ($request->hasFile('photo')) {
+
+            $empleado = Empleados::findOrFail($id);
+
+            Storage::delete('public/' . $empleado->photo);
+
+            $dataEmpleado['photo'] = $request->file('photo')->store('uploads', 'public');
+        }
+
+        Empleados::where('id', '=', $id)->update($dataEmpleado);
+
+        $empleado = Empleados::findOrFail($id);
+        return view('empleados.edit', compact('empleado'));
     }
 
     /**
@@ -97,7 +111,13 @@ class EmpleadosController extends Controller
     public function destroy($id)
     {
         //
-        Empleados::destroy($id);
+
+        $empleado = Empleados::findOrFail($id);
+
+        if (Storage::delete('public/' . $empleado->photo)) {
+            Empleados::destroy($id);
+        }
+
 
         return redirect('empleados');
     }

@@ -18,5 +18,7 @@ Create
 
 
     <input type="submit" value="Agregar">
+    <a href="{{ url('empleados/') }}">Back</a>
+
 
 </form>

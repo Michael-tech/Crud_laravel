@@ -1,4 +1,8 @@
-index
+@if(Session::has(Mensaje)){{
+    Session::get(Mensaje)
+}}
+@endif
+<a href="{{ url('empleados/create') }}">Create</a>
 
 <table class="table table-light">
     <thead class="thead-light">
@@ -16,7 +20,9 @@ index
         @foreach($empleados as $empleado)
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $empleado->photo }}</td>
+            <td>
+                <img src="{{ asset('storage').'/'. $empleado->photo }}" alt="" width="200">
+            </td>
             <td>{{ $empleado->first_name }}</td>
             <td>{{ $empleado->last_name }}</td>
             <td>{{ $empleado->email }}</td>
