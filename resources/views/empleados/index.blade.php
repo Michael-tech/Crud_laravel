@@ -1,5 +1,5 @@
-@if(Session::has(Mensaje)){{
-    Session::get(Mensaje)
+@if(Session::has('Message')){{
+    Session::get('Message')
 }}
 @endif
 <a href="{{ url('empleados/create') }}">Create</a>

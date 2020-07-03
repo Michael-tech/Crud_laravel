@@ -48,7 +48,7 @@ class EmpleadosController extends Controller
 
         Empleados::insert($dataEmpleado);
 
-        return redirect('empleados');
+        return redirect('empleados')->with('Message', 'Employee successfully added');
     }
 
     /**
@@ -98,8 +98,9 @@ class EmpleadosController extends Controller
 
         Empleados::where('id', '=', $id)->update($dataEmpleado);
 
-        $empleado = Empleados::findOrFail($id);
-        return view('empleados.edit', compact('empleado'));
+        
+        return redirect('empleados')->with('Message', 'Employee successfully updated');
+
     }
 
     /**
@@ -118,7 +119,7 @@ class EmpleadosController extends Controller
             Empleados::destroy($id);
         }
 
+        return redirect('empleados')->with('Message', 'Employee successfully removed');
 
-        return redirect('empleados');
     }
 }
