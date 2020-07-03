@@ -40,6 +40,17 @@ class EmpleadosController extends Controller
      */
     public function store(Request $request)
     {
+        $flieds=[
+          'first_name' => 'required|string|max:100',
+          'last_name' => 'required|string|max:100',
+          'email' => 'required|email',
+          'photo' => 'required|max:10000|mimes:jpeg,png,jpg'
+        
+        ];
+        $Message=["required"=>'The :attribute is requiered'];
+
+        $this->validate($request, $flieds, $Message);
+
         $dataEmpleado = request()->except('_token');
 
         if ($request->hasFile('photo')) {
@@ -98,9 +109,8 @@ class EmpleadosController extends Controller
 
         Empleados::where('id', '=', $id)->update($dataEmpleado);
 
-        
-        return redirect('empleados')->with('Message', 'Employee successfully updated');
 
+        return redirect('empleados')->with('Message', 'Employee successfully updated');
     }
 
     /**
@@ -120,6 +130,5 @@ class EmpleadosController extends Controller
         }
 
         return redirect('empleados')->with('Message', 'Employee successfully removed');
-
     }
 }

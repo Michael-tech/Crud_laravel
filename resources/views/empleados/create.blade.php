@@ -4,6 +4,8 @@
 
 <div class="container">
 
+
+
     <form action="{{ url('/empleados') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
         @csrf
 
