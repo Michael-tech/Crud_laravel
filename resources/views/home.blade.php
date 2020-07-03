@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ ('Aplicacion creada con Laravel 7, es un simple crud de ' ) }} <a href="{{ url('empleados') }}">Empleados</a> 
                 </div>
             </div>
         </div>

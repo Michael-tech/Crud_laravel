@@ -4,9 +4,12 @@
 
 <div class="container">
 
-    @if(Session::has('Message')){{
-    Session::get('Message')
-    }}
+    @if(Session::has('Message'))
+
+    <div class="alert alert-success">
+        {{ Session::get('Message') }}
+    </div>
+    
     @endif
     <a href="{{ url('empleados/create') }}" class="btn btn-success">Create</a>
     <br>
@@ -28,7 +31,7 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>
-                    <img src="{{ asset('storage').'/'. $empleado->photo }}" alt="" width="100" class=" img-fluid">
+                    <img src="{{ asset('storage').'/'. $empleado->photo }}" alt="" width="80" class=" img-fluid">
                 </td>
                 <td>{{ $empleado->first_name }} {{ $empleado->last_name }}</td>
                
@@ -49,5 +52,7 @@
             @endforeach
         </tbody>
     </table>
+    {{ $empleados->links() }}
+
 </div>
 @endsection
