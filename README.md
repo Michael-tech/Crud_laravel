@@ -8,8 +8,8 @@
 </p>
 
 #Requerimets
-Tener instalado Composer https://getcomposer.org/download/
-xampp 
+* Tener instalado Composer https://getcomposer.org/download/   <br>
+* xampp 
 
 
 #Levantar el Proyecto larvel
