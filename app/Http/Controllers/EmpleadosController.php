@@ -40,7 +40,7 @@ class EmpleadosController extends Controller
      */
     public function store(Request $request)
     {
-        $flieds=[
+        $fields=[
           'first_name' => 'required|string|max:100',
           'last_name' => 'required|string|max:100',
           'email' => 'required|email',
@@ -49,7 +49,7 @@ class EmpleadosController extends Controller
         ];
         $Message=["required"=>'The :attribute is requiered'];
 
-        $this->validate($request, $flieds, $Message);
+        $this->validate($request, $fields, $Message);
 
         $dataEmpleado = request()->except('_token');
 
@@ -95,10 +95,26 @@ class EmpleadosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $fields=[
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'email' => 'required|email',
+          
+          ];
+
+          if($request->hasfile('photo')){
+            
+            $fields+=['photo' => 'required|max:10000|mimes:jpeg,png,jpg'];
+          }
+
+          $Message=["required"=>'The :attribute is requiered'];
+  
+          $this->validate($request, $fields, $Message);
+
         $dataEmpleado = request()->except(['_token', '_method']);
 
-        if ($request->hasFile('photo')) {
+        if($request->hasFile('photo')) {
 
             $empleado = Empleados::findOrFail($id);
 

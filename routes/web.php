@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::resource('empleados', 'EmpleadosController');
+Route::resource('empleados', 'EmpleadosController')->middleware('auth');
 
 Auth::routes();
 
