@@ -1,10 +1,16 @@
-este es editar
+@extends('layouts.app')
 
-<form action="{{ url('/empleados/'.$empleado->id) }}" method="post" enctype="multipart/form-data">
-    @csrf
-    {{ method_field('PATCH') }}
+@section('content')
 
-    @include('empleados.form',['Mode'=>'update'])
+<div class="container">
+
+    <form action="{{ url('/empleados/'.$empleado->id) }}" method="post" enctype="multipart/form-data">
+        @csrf
+        {{ method_field('PATCH') }}
+
+        @include('empleados.form',['Mode'=>'update'])
 
 
-</form>
+    </form>
+</div>
+@endsection
