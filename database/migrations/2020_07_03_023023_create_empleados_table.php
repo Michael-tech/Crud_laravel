@@ -19,8 +19,12 @@ class CreateEmpleadosTable extends Migration
             $table->string('last_name');
             $table->string('email');
             $table->string('photo');
-
             $table->timestamps();
+
+            /** 
+             * php artisan migrate:refresh
+             * para refrescar las migrasiones en caso de que se migrara mal
+             * */ 
         });
     }
 
